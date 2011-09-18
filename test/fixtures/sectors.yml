@@ -1,0 +1,10 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+tech_sector:
+  id: 1
+  name: Technology
+  outlook: good
+  child_url: url1
+  eps: 2.1
+  pe_ratio: 3.2
+  ronw: 15.4
+  price_to_book_value_multiple: 4.2

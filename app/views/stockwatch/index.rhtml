@@ -1,0 +1,109 @@
+<html>
+  <head>
+  <title>Stock List</title>
+    <style type="text/css">
+      body    {
+      font-family: Verdana;
+      font-size: smaller;
+      }
+      h1 {
+      font-family: Verdana;
+      font-size: larger;
+      }
+      
+      h2 {
+      font-family: Verdana;
+      font-size: medium;
+      font-weight:bold;
+      }
+      
+      table tr th {
+      font-weight:bold;
+      font-size:10;
+      background-color:#efefe0;
+      color:#800000;
+      }
+      
+      table tr td {
+      font-weight:normal;
+      font-size:9;
+      color:#000000;
+      }
+      
+      .good {
+      background-color:lime;
+      }
+      
+      .bad {
+      background-color:red;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div style="float:left;"><h1>Sector List</h1></div>
+    <div style="float:right;"><%= button_to "Refresh Data", :action => "refresh_data" %></div>
+    
+    <% @sectors.each do |sector|%>
+      <div style="clear:both; float:left; margin-right:50px;">
+        <h2 style="clear:both;">Sector Name: <%= sector.name %></h2>
+      </div>
+      <div style="float:left;"><h2>Sector Outlook: <%= sector.outlook %></h2></div>
+      <table border="1" width="100%" style="clear:both;">
+        <tr>
+          <th>Company Name</th>
+          <th>Last FY Profit</th>
+          <th>Prev Qrtr Profit</th>
+          <th>Latest Qrtr Profit</th>
+          <th>EPS</th>
+          <th>P/E Ratio</th>
+          <th>Book Value</th>
+          <th>RONW(%)</th>
+          <th>Market Cap</th>
+          <th>Dividend/share</th>
+          <th>52week high</th>
+          <th>52week low</th>
+          <th>LTP</th>
+          <th>LTP/BV</th>
+          <th>Rating</th>
+          <th>Score</th>
+        </tr>
+        <%sector.companies.each do |company|%>
+          <tr>
+            <td><%= company.name %></td>
+            <td <%=apply_rating(company, :last_FY_net_profit) %>><%= number_with_precision(company.last_FY_net_profit, 2) %></td>
+            <td <%=apply_rating(company, :previous_quarter_net_profit) %>><%= number_with_precision(company.previous_quarter_net_profit, 2) %></td>
+            <td <%=apply_rating(company, :latest_quarter_net_profit) %>><%= number_with_precision(company.latest_quarter_net_profit, 2) %></td>
+            <td <%=apply_rating(company, :eps) %>><%= number_with_precision(company.eps, 2) %></td>
+            <td <%=apply_rating(company, :pe_ratio) %>><%= number_with_precision(company.pe_ratio, 2) %></td>
+            <td><%= number_with_precision(company.book_value, 2) %></td>
+            <td <%=apply_rating(company, :ronw) %>><%= number_with_precision(company.ronw, 2) %></td>
+            <td><%= number_with_precision(company.market_cap, 2) %></td>
+            <td><%= number_with_precision(company.dividend_per_share, 2) %></td>
+            <td <%=apply_rating(company, :year_high) %>><%= number_with_precision(company.year_high, 2) %></td>
+            <td <%=apply_rating(company, :year_low) %>><%= number_with_precision(company.year_low, 2) %></td>
+            <td><%= number_with_precision(company.latest_price, 2) %></td>
+            <td <%=apply_rating(company, :price_to_book_value_multiple) %>>
+                <%= number_with_precision(company.price_to_book_value_multiple, 2) %>
+                </td>
+            <td <%=apply_rating(company, :rating) %>><%= company.rating %></td>
+            <td><%= company.score.nil? ? 0 : company.score %></td>
+          </tr>
+        <%end%>
+        <tr>
+          <td colspan="4"><b>Sector Average</b></td>
+          <td><%= number_with_precision(sector.eps, 2) %></td>
+          <td><%= number_with_precision(sector.pe_ratio, 2) %></td>
+          <td>&nbsp;</td>
+          <td><%= number_with_precision(sector.ronw, 2) %></td>
+          <td colspan="5">&nbsp;</td>
+          <td><%= number_with_precision(sector.price_to_book_value_multiple, 2) %></td>
+          <td>&nbsp;</td>
+          <td><%= sector.score %></td>
+        </tr>
+      </table>
+    
+    
+    <%end%>
+  </body>
+</html>

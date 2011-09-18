@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+thoughtworks:
+  id: 1
+  sector_id: 1
+  name: Thoughtworks
+  last_FY_net_profit: 10
+  previous_quarter_net_profit: 2
+  latest_quarter_net_profit: 3
+  eps: 2.35
+  pe_ratio: 3.1
+  book_value: 50
+  ronw: 14.7
+  market_cap: 34.2
+  dividend_per_share: 0.2
+  year_high: 35.1
+  year_low: 23.2
+  latest_price: 33.3
+  rating: OverWeight
+
